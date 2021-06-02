@@ -40,6 +40,6 @@ jobs:
           api-level: ${{ matrix.api-level }}
           arch: x86
           profile: Nexus 6
-          target: playstore
+          target: google_apis
           emulator-options: -no-window
           script: bundle exec fastlane test_without_setup
