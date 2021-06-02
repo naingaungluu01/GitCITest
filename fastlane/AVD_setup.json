@@ -13,7 +13,7 @@
       "launch_avd_port": "",
       "launch_avd_snapshot_filepath": "",
       "launch_avd_launch_binary_name": "emulator",
-      "launch_avd_additional_options": "-gpu on -no-boot-anim -snapshot custom"
+      "launch_avd_additional_options": "-gpu on -no-boot-anim -no-window -snapshot custom"
     },
     {
       "avd_name": "Nexus_5X_API_22",
@@ -28,7 +28,7 @@
       "launch_avd_port": "",
       "launch_avd_snapshot_filepath": "",
       "launch_avd_launch_binary_name": "emulator",
-      "launch_avd_additional_options": "-gpu on -no-boot-anim -snapshot custom"
+      "launch_avd_additional_options": "-gpu on -no-boot-anim -no-window -snapshot custom"
     },
     {
       "avd_name": "Pixel_XL_API_28",
@@ -43,7 +43,7 @@
       "launch_avd_port": "",
       "launch_avd_snapshot_filepath": "",
       "launch_avd_launch_binary_name": "emulator",
-      "launch_avd_additional_options": "-gpu on -no-boot-anim -snapshot custom"
+      "launch_avd_additional_options": "-gpu on -no-boot-anim -no-window -snapshot custom"
     }
   ]
 }
