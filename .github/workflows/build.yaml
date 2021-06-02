@@ -18,16 +18,25 @@ jobs:
           cache: true
       - name: Test the app
         run: bundle exec fastlane test
-  # test-with-utp:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Checkout the code
-  #       uses: actions/checkout@v2
-  #     - name: Setup JDK
-  #       uses: actions/setup-java@v1
-  #       with:
-  #         java-version: '11'
-  #     - name: Setup Fastlane
-  #       run: bundle update
-  #     - name: Run Tests
-  #       run: bundle exec fastlane test_with_gradle
+  test-with-ci-avd:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [22, 28, 30]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Enable Gradle Cache
+        uses: actions/cache@v2
+          with:
+            path: ~/.gradle/caches
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+            restore-keys: ${{ runner.os }}-gradle-
+      - name: Setup Fastlane
+        run: bundle update
+      - name: Run Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86
+          script: bundle exec fastlane test_without_setup
