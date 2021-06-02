@@ -27,8 +27,8 @@ platform :android do
             AVD_setup_path: "./fastlane/AVD_setup.json",
             AVD_recreate_new: false,
             AVD_clean_after: false,
-            AVD_param_launch_timeout: "240",
-            AVD_adb_launch_timeout: "600",
+            AVD_param_launch_timeout: "480",
+            AVD_adb_launch_timeout: "1000",
             shell_task:"
             bash fastlane/adb-all shell \"settings put global animator_duration_scale 0.0 &&
             settings put global window_animation_scale 0.0 &&
