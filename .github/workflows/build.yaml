@@ -1,0 +1,33 @@
+name: 'Build & Test'
+on: [push, pull_request]
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Setup Fastlane
+        run: bundle update
+      - name: Setup Android System Images
+        uses: maxim-lobanov/setup-android-tools@v1
+        with:
+          packages: |
+            system-images;android-30;google_apis_playstore;x86
+            system-images;android-22;google_apis;x86
+            system-images;android-28;google_apis_playstore;x86
+          cache: true
+      - name: Test the app
+        run: bundle exec fastlane test
+  # test-with-utp:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v2
+  #     - name: Setup JDK
+  #       uses: actions/setup-java@v1
+  #       with:
+  #         java-version: '11'
+  #     - name: Setup Fastlane
+  #       run: bundle update
+  #     - name: Run Tests
+  #       run: bundle exec fastlane test_with_gradle

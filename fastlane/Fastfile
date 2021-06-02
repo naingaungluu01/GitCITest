@@ -1,0 +1,55 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    lane :uiTest do
+          gradle(
+            task: "clean app:connectedprodDebugAndroidTest"
+          )
+    end
+    automated_test_emulator_run(
+            AVD_setup_path: "./fastlane/AVD_setup.json",
+            AVD_recreate_new: false,
+            AVD_clean_after: false,
+            AVD_param_launch_timeout: "240",
+            AVD_adb_launch_timeout: "600",
+            shell_task:"
+            bash fastlane/adb-all shell \"settings put global animator_duration_scale 0.0 &&
+            settings put global window_animation_scale 0.0 &&
+            settings put global transition_animation_scale 0.0\" &&
+            ./gradlew app:connectedprodDebugAndroidTest
+            "
+      )
+  end
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end
