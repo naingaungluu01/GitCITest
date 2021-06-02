@@ -18,11 +18,6 @@ default_platform(:android)
 platform :android do
   desc "Runs all the tests"
   lane :test do
-    lane :uiTest do
-          gradle(
-            task: "clean app:connectedprodDebugAndroidTest"
-          )
-    end
     automated_test_emulator_run(
             AVD_setup_path: "./fastlane/AVD_setup.json",
             AVD_recreate_new: false,
@@ -36,6 +31,13 @@ platform :android do
             ./gradlew app:connectedAndroidTest
             "
       )
+  end
+
+  desc "Run UI tests without setup"
+  lane :test_without_setup do
+    gradle(
+      task: "clean connectedAndroidTest"
+    )
   end
 
   desc "Submit a new Beta Build to Crashlytics Beta"
