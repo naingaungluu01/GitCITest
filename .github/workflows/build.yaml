@@ -11,7 +11,7 @@ jobs:
       JOB_ID: {{ github.job }}
     steps:
         - name: Print Env
-          run: echo "Job - $GITHUB_JOB Run Id - $GITHUB_RUN_ID Run No - $GITHUB_RUN_NUMBER"
+          run: echo "Job - $GITHUB_JOB Run Id - $GITHUB_RUN_ID Run No - $GITHUB_RUN_NUMBER Job Id - $JOB_ID"
 #       - name: Checkout the code
 #         uses: actions/checkout@v2
 #       - name: Enable Gradle Cache
