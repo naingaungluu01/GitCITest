@@ -10,8 +10,12 @@ jobs:
     steps:
         - name: Print Env
           env:
-            JOB_ID: ${{ toJSON(job) }}
-          run: echo "Job - $GITHUB_JOB Run Id - $GITHUB_RUN_ID Run No - $GITHUB_RUN_NUMBER Job - $JOB_ID"
+            GITHUB: ${{ toJSON(github) }}
+            ENV: ${{ toJSON(env) }}
+            JOB: ${{ toJSON(job) }}
+            STEPS: ${{ toJSON(steps) }}
+            RUNNER: ${{ toJSON(runner) }}
+          run: echo "GITHUB - $GITHUB ENV - $ENV , JOB - $JOB , STEPS - $STEPS , RUNNER - $RUNNER"
 #       - name: Checkout the code
 #         uses: actions/checkout@v2
 #       - name: Enable Gradle Cache
