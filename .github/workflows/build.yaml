@@ -3,15 +3,15 @@ on: [push, pull_request]
 jobs:
   build-and-test:
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        api-level: [22, 28, 30]
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         api-level: [22, 28, 30]
     env:
-      JOB_ID: github.job
+      JOB_ID: {{ github.job }}
     steps:
         - name: Print Env
-          run: echo $JOB_ID
+          run: echo "Job - $GITHUB_JOB Run Id - $GITHUB_RUN_ID Run No - $GITHUB_RUN_NUMBER"
 #       - name: Checkout the code
 #         uses: actions/checkout@v2
 #       - name: Enable Gradle Cache
