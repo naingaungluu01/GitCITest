@@ -1,46 +1,33 @@
 name: 'Build & Test'
 on: [push, pull_request]
 jobs:
-#   build-and-test:
-#     runs-on: macos-latest
-#     steps:
-#       - name: Checkout the code
-#         uses: actions/checkout@v2
-#       - name: Setup Fastlane
-#         run: bundle update
-#       - name: Setup Android System Images
-#         uses: maxim-lobanov/setup-android-tools@v1
-#         with:
-#           packages: |
-#             system-images;android-30;google_apis_playstore;x86
-#             system-images;android-22;google_apis;x86
-#             system-images;android-28;google_apis_playstore;x86
-#           cache: true
-#       - name: Test the app
-#         run: bundle exec fastlane test
   build-and-test:
     runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         api-level: [22, 28, 30]
+    env:
+      JOB_ID: github.job
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
-      - name: Enable Gradle Cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-      - name: Seutp Fastlane
-        run: bundle update
-      - name: Run Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          arch: x86
-          profile: Nexus 6
-          target: google_apis
-          emulator-options: -no-window
-          script: bundle exec fastlane test_without_setup
+        - name: Print Env
+          run: echo $JOB_ID
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
+#       - name: Enable Gradle Cache
+#         uses: actions/cache@v1
+#         with:
+#           path: ~/.gradle/caches
+#           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+#           restore-keys: ${{ runner.os }}-gradle-
+#       - name: Seutp Fastlane
+#         run: bundle update
+#       - name: Run Tests
+#         uses: reactivecircus/android-emulator-runner@v2
+#         with:
+#           api-level: ${{ matrix.api-level }}
+#           arch: x86
+#           profile: Nexus 6
+#           target: google_apis
+#           emulator-options: -no-window
+#           script: bundle exec fastlane test_without_setup
